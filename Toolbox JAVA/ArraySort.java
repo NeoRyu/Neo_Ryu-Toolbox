@@ -1,10 +1,5 @@
-package rpgame;
-
-import java.util.Arrays;
-import java.util.Vector;
-
 /**
- * SNIPPETS permettant de trier un tableau
+ * SNIPPETS permettant de permutter ou trier un tableau
  * @author COUPEZ Frédéric
  */
 public class ArraySort {
@@ -20,13 +15,13 @@ public class ArraySort {
     // VERIFICATIONS ET CAPTURES D'ERREURS
     public <T> T[] arrayCheck (T[] data, int ind1, int ind2) {
         // Si le tableau ne contient rien, on leve une exception
-        if (data.toString().length() > 0)
+        if (data.toString().length() <= 0)
             throw new IllegalArgumentException("Le tableau ne contient rien...");   
         return data;
     }
     public String arrayCheck (String data, int ind1, int ind2) {
         // Si la chaine ne contient rien, on leve une exception
-        if (data.length() > 0)
+        if (data.length() <= 0)
             throw new IllegalArgumentException("La chaine ne contient rien...");   
         return data;
     }
@@ -45,7 +40,7 @@ public class ArraySort {
     }
     
     // FONCTION SWAP : Permuter deux element entre eux
-    // Permutation de deux elements dans un tableau de type variable
+    // Permutation de deux elements dans un tableau polymorphique
     private <T> T[] swap(T[] list, int ind1, int ind2) {
         try {             
             // Vérifie que le tableau et indices sont corrects
@@ -63,8 +58,10 @@ public class ArraySort {
         return list;
     }    
     // Permutation de deux caracteres dans un String
-    private String swap(String chaine, int ind1, int ind2) {   
+    public String swap(String chaine, int ind1, int ind2) {  
+    	String data = "";
         try {
+        	
             // Vérifie que la chaine et indices sont corrects
             chaine = arrayCheck(chaine, ind1, ind2);
             ind1 = indiceCheck(chaine.length(),ind1);
@@ -72,19 +69,21 @@ public class ArraySort {
 
             // DECOUPAGE & RECONSTRUCTION DE LA CHAINE AVEC PERMUTATION
             String[] parts = chaine.split("");
-            chaine = "";
+            
             for(int i = 0 ; i < chaine.length() ; i++) {
                 if (i == ind1 || i == ind2) {
-                    if (i == ind1) chaine = chaine + parts[ind2];
-                    else chaine = chaine + parts[ind1];
+                    if (i == ind1) 
+                    	data += parts[ind2];
+                    else 
+                    	data += parts[ind1];
                 } else {
-                    chaine = chaine + parts[i];
+                	data += parts[i];
                 }            
             }    
         } catch (Exception e) {
             System.out.println(e);
         }
-        return chaine;
+        return data;
     }    
         
     // TRI A BULLES BIDIMENTIONNEL
@@ -121,25 +120,5 @@ public class ArraySort {
             triBullesD(list, deb+1, fin);
         }
         return list;
-    }    
-    
-    /*  //-> Non implémentés car inutilisés, les commentaires n'etant pas 
-        //   compilés, on peut le laisser de coté au cas où... :
-    
-    // GET / SET
-    // Premier indice (pour les permutations)
-    private int X;
-    public int getX() { return X;   }
-    public void setX(int X) {   this.X = X; }
-    // Second indice (pour les permutations)
-    private int Y;
-    public int getY() { return Y;   }
-    public void setY(int Y) {   this.Y = Y; }
-    
-    //CONSTRUCTEUR
-    public ArraySort(int x, int y) {
-        this.X = x;
-        this.Y = y;
-    }
-    */
+    }       
 }
