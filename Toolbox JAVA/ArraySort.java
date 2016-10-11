@@ -85,8 +85,72 @@ public class ArraySort {
         }
         return data;
     }    
-        
-    // TRI A BULLES BIDIMENTIONNEL
+     
+    // TRI A BULLES BIDIMENTIONNEL -> LIST<T>
+    // swap
+	private <T> List<T> swap(List<? super T> list, int ind1, int ind2) {
+		try {             
+            // Permutation des deux données aux indices indiqués		
+            T temp = (T) list.get(ind1);            
+            list.set(ind1, (T) list.get(ind2));
+            list.set(ind2, (T) temp);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return (List<T>) list;		
+	} 
+    // droite
+    public <T> List<T> triBullesD(List<? super T> list, int deb, int fin, char signe)
+    {
+        setOrderByOK(true);
+        for(int i = deb ; i < fin ; i++)
+        {
+        	if (signe == '>')
+	            if(Integer.parseInt(list.get(i).toString()) > Integer.parseInt(list.get(i-1).toString()))
+	            {
+	                swap(list,i,i-1);
+	                setOrderByOK(false);
+	            }
+	        if (signe == '<')
+	            if(Integer.parseInt(list.get(i).toString()) < Integer.parseInt(list.get(i-1).toString()))
+	            {
+	                swap(list,i,i-1);
+	                setOrderByOK(false);
+	            }
+        }
+        if(!getOrderByOK())
+        {
+            triBullesG(list, deb, fin-1, signe);
+        }
+        return (List<T>) list;
+    }
+    // gauche
+	public <T> List<T> triBullesG(List<? super T> list, int deb, int fin, char signe)
+    {
+        setOrderByOK(true);
+        for(int i = fin ; i > deb ; i--)
+        {
+        	if (signe == '>')
+	            if(Integer.parseInt(list.get(i-1).toString()) < Integer.parseInt(list.get(i).toString()))
+	            {
+	                swap(list,i,i-1);
+	                setOrderByOK(false);
+	            }
+	        if (signe == '<')
+            	if(Integer.parseInt(list.get(i-1).toString()) > Integer.parseInt(list.get(i).toString()))
+	            {
+	                swap(list,i,i-1);
+	                setOrderByOK(false);
+	            }
+        }
+        if(!getOrderByOK())
+        {
+            triBullesD(list, deb, fin, signe);
+        }
+        return (List<T>) list;
+    } 
+    
+    // TODO NON TESTEE : TRI A BULLES BIDIMENTIONNEL -> t[]
     public <T> T[] triBullesD(T[] list, int deb, int fin)
     {
         setOrderByOK(true);
